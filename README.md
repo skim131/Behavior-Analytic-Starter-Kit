@@ -4,9 +4,9 @@ Open source personalization engine for ecommerce powered by [Qubell](http://qube
 
 Why it's cool?
 -------------
-- Open source - you can adapt it for your current needs.
+- Open source - you can adapt the starter kit for your current needs.
 - Fast setup - don't waste time for development!
-- Get product recommendations in 3 steps
+- Get product recommendations in 3 steps.
 - Don't want use real transaction log? We'll generate sample for you - just export your catalog.
 
 Technologies
@@ -27,12 +27,12 @@ Components
 * Web store is a java application based on [Broadleaf framework](http://www.broadleafcommerce.org).
 It uses wide range of well known technologies such as [Spring](http://www.springsource.org),
 [Hibernate](http://www.hibernate.org) and [Apache Solr](http://lucene.apache.org/solr).
-You can see your recommendations results in demo web store application.
+You can see your recommendations results in a demo web store application.
 
-* Behavior analytics platform is based on Hadoop cluster (HDFS and Map/Reduce) with recommendation processor
-based on [Apache Mahout](http://mahout.apache.org) and additional Transaction Log generator.
+* Behavior analytics platform is based on Hadoop cluster (HDFS and Map/Reduce) with a recommendation processor
+based on [Apache Mahout](http://mahout.apache.org) and an additional Transaction Log generator.
 Hadoop cluster uses [Cloudera Hadoop Distribution CDH4](http://www.cloudera.com/content/cloudera/en/products/cdh.html).
-Behavior analytics platform run Hadoop cluster on your Amazon EC2 account, generate transaction log and recommendations for you.
+Behavior analytics platform runs Hadoop cluster on your Amazon EC2 account and generates transaction logs and recommendations for you.
 
 This repository contains:
 
@@ -63,7 +63,7 @@ How can I modify?
 -----------------
 
 
-We are providing to you all components of our engine:
+We are providing all components of our engine:
 
 1. **Manifests for Qubell**
     - [WebStore][webstore_manifest]
@@ -135,12 +135,12 @@ We are providing to you all components of our engine:
 
     You can add own generation strategy by change source code in [transaction-log-generator module]
 
-4. **Recommendation processor.** Designed to produce recommendations (what items often bought together). Currently It find frequent patterns from transaction log using PFP-Growth algorithm from Apache Mahout library. We change aggregation stage of PFP-Growth algorithm to produce association rules as text file because output of PFP-Growth algorithm is binary file with frequent patterns.
-Also we have created own job runner that can take hadoop parameters (e.g. -Dmapred.job.map.memory.mb=2048 and so on) and pfp parameters (minSupport, groups).
+4. **Recommendation processor.** Designed to produce recommendations (what items are often bought together). Currently it finds frequent patterns from the transaction log using PFP-Growth algorithm from Apache Mahout library. We change the aggregation stage of PFP-Growth algorithm to produce association rules as text file because output of PFP-Growth algorithm is binary file with frequent patterns.
+Also we have created our own job runner that is able to take hadoop parameters (e.g. -Dmapred.job.map.memory.mb=2048 and so on) and pfp parameters (minSupport, groups).
 
-    You can change current recommendations generation algorithm by change source code in [recommendation-processor module].
-5. **WebStore sample application.** Simple shopping cart application based on demo web application (HeatClinic) of Broadleaf Commerce framework. In this web store we have added a simple recommendation engine that shows recommendations to cart content using recommendations from recommendation-processor application.
-Also we have added following features to web store that available via [REST API](docs/Developer-Guide--Web-Store--REST-API.md):
+    You can change current recommendations generation algorithm by changing the source code in [recommendation-processor module].
+5. **WebStore sample application.** Simple shopping cart application based on demo web application (HeatClinic) of Broadleaf Commerce framework. In this web store we have added a simple engine that shows recommendations to cart using recommendations from a recommendation-processor application.
+Also we have added the following features to the web store that are available via [REST API](docs/Developer-Guide--Web-Store--REST-API.md):
     - Export product catalog information for transaction log generator
     - Import recommendations
     - Import product catalog (we have created own product catalog based on magento catalog)
