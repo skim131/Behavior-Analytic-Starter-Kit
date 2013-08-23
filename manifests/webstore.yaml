@@ -181,6 +181,19 @@ Get_product_catalog_from_S3:
                         bucket: ${bucket}
                         s3file: ${s3_filename}
                         action: ${action}
+update:
+    parameters:
+        - app-fork: *app-fork
+        - app-branch: *app-branch
+
+    steps:
+        - update-app:
+            action: .deploy.app
+            parameters:
+              db-hosts: "{$.db-hosts}"
+              app-fork: "{$.app-fork}"
+              app-branch: "{$.app-branch}"
+              
 destroy:
     steps:
         - destroy:
