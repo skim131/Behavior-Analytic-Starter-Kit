@@ -28,6 +28,12 @@ launch:
                 "no": "false"
         slaveQuantity:
              default: 4
+        app-fork: &app-fork
+            description: Source control fork
+            default: "qubell"
+        app-branch: &app-branch
+            description: Source control branch
+            default: "HEAD"
     steps:
         - start_hmaster:
             action: provisionVms
@@ -537,6 +543,46 @@ Launch_recommendation_processor:
         analytics_result_path:
             description: "Recommendation processor S3 output path"
             value: "s3://${s3_bucket_name}/${recommendation_filename}"
+            
+update:
+    parameters:
+        - app-fork: *app-fork
+        - app-branch: *app-branch
+
+    steps:
+        - update-app:
+            action: .deploy.app
+            parameters:
+              db-hosts: "{$.db-hosts}"
+              app-fork: "{$.app-fork}"
+              app-branch: "{$.app-branch}"
+
+.deploy.app:
+  parameters:
+    - db-hosts:
+        description: Database IP address
+    - app-fork: *app-fork
+    - app-branch: *app-branch
+  steps:
+    - deploy-app:
+        action: "chefrun"
+        phase: deploy-app
+        parameters:
+          roles: [ app-node ]
+          runList: ["recipe[qubell::webapp]"]
+          isSolo: true
+          recipeUrl: "https://github.com/qubell/cookbooks/raw/0.2/cookbooks.tar.gz"
+          jattrs:
+            scm:
+              provider: "git"
+              repository: git://github.com/{$.app-fork}/starter-java-web.git
+              revision: "{$.app-branch}"
+            database:
+              name: "petclinic"
+              host: "{$.db-hosts}"
+              user: "petclinic"
+              password: "petclinic"
+            
 
 .s3manage:
     parameters:
