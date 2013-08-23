@@ -27,6 +27,12 @@ launch:
         site_app_url:
             description: "site_app_url"
             default: "http://gd-bask.s3.amazonaws.com/bask-site.war"
+        app-fork: &app-fork
+            description: Source control fork
+            default: "qubell"
+        app-branch: &app-branch
+            description: Source control branch
+            default: "HEAD"
     steps:
         - start_webstore_vm:
             action: provisionVms
