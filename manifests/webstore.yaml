@@ -214,7 +214,7 @@ update:
           roles: [ app-node ]
           runList: ["recipe[qubell::webapp]"]
           isSolo: true
-          recipeUrl: "https://github.com/qubell/cookbooks/raw/0.2/cookbooks.tar.gz"
+          recipeUrl: "https://github.com/skim131/cookbooks/raw/0.2/cookbooks.tar.gz"
           jattrs:
             scm:
               provider: "git"
