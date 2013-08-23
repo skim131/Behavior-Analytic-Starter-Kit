@@ -194,6 +194,33 @@ update:
               app-fork: "{$.app-fork}"
               app-branch: "{$.app-branch}"
               
+.deploy.app:
+  parameters:
+    - db-hosts:
+        description: Database IP address
+    - app-fork: *app-fork
+    - app-branch: *app-branch
+  steps:
+    - deploy-app:
+        action: "chefrun"
+        phase: deploy-app
+        parameters:
+          roles: [ app-node ]
+          runList: ["recipe[qubell::webapp]"]
+          isSolo: true
+          recipeUrl: "https://github.com/qubell/cookbooks/raw/0.2/cookbooks.tar.gz"
+          jattrs:
+            scm:
+              provider: "git"
+              repository: git://github.com/{$.app-fork}/starter-java-web.git
+              revision: "{$.app-branch}"
+            database:
+              name: "petclinic"
+              host: "{$.db-hosts}"
+              user: "petclinic"
+              password: "petclinic"
+
+
 destroy:
     steps:
         - destroy:
